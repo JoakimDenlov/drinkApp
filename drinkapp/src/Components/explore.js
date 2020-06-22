@@ -3,14 +3,36 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import json from "../Data/drinks.json";
 import "../Styling/explore.css";
+import { useHistory } from "react-router-dom";
 
 const Explore = () => {
   const { register, handleSubmit } = useForm();
+  const [submitted, setSubmitted] = useState(false);
   const [jsonData, setJsonData] = useState(json.cocktails);
+  const history = useHistory();
+
+  const handleEvent = () => {
+    history.push("/drinkInfo");
+    setJsonData(json.cocktails);
+  };
+
+  const DataList = () => {
+    return (
+      <div>
+        {jsonData.map((drink) => (
+          <div>
+            <p>{drink.name}</p>
+            <img onClick={handleEvent} src={drink.image} />
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   const onSubmit = (data) => {
     if (JSON.stringify(json.cocktails).includes(data.name)) {
-      return console.log("items found");
+      setJsonData(jsonData.filter((test) => test.name.includes(data.name)));
+      setSubmitted(true);
     } else {
       alert("No drinks Found");
     }
@@ -32,13 +54,7 @@ const Explore = () => {
           <input type="submit" value="Search" />
         </form>
       </div>
-
-      {jsonData.map((drink) => (
-        <div>
-          <p>{drink.name}</p>
-          <img src={drink.image} />
-        </div>
-      ))}
+      {submitted && <DataList />}
     </div>
   );
 };
