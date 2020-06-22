@@ -4,8 +4,6 @@ import Image from "../Images/tentabild.jpg";
 import "../Styling/Homepage.css";
 
 const Homepage = () => {
-  const [test, setTest] = useState(0);
-
   return (
     <div className="Homepage">
       <Link to="/"> Home..</Link>

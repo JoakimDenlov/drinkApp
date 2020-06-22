@@ -15,6 +15,10 @@ const Explore = () => {
     history.push("/drinkInfo");
     setJsonData(json.cocktails);
   };
+  const handleReset = () => {
+    setJsonData(json.cocktails);
+    setSubmitted(false);
+  };
 
   const DataList = () => {
     return (
@@ -31,8 +35,8 @@ const Explore = () => {
 
   const onSubmit = (data) => {
     if (JSON.stringify(json.cocktails).includes(data.name)) {
-      setJsonData(jsonData.filter((test) => test.name.includes(data.name)));
       setSubmitted(true);
+      setJsonData(jsonData.filter((drinks) => drinks.name.includes(data.name)));
     } else {
       alert("No drinks Found");
     }
@@ -45,6 +49,7 @@ const Explore = () => {
       <div id="form">
         <form name="userInput" onSubmit={handleSubmit(onSubmit)}>
           <input
+            onClick={handleReset}
             type="text"
             name="name"
             placeholder="search"
